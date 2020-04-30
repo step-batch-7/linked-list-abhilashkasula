@@ -26,6 +26,11 @@ void operate(List_ptr numbers, char choice)
     scanf("%d", &position);
     insert_at(numbers, value, position);
     break;
+  case 'd':
+    printf("Enter a number:\n");
+    scanf("%d", &value);
+    add_unique(numbers, value);
+    break;
   }
 }
 
