@@ -112,6 +112,31 @@ Status remove_from_start(List_ptr list)
   return Success;
 }
 
+Status remove_from_end(List_ptr list)
+{
+  if (list->count <= 0)
+    return Failure;
+  if (list->head->next == NULL)
+  {
+    list->head = NULL;
+    list->last = NULL;
+  }
+  else
+  {
+    Node_ptr previous_node = NULL;
+    Node_ptr p_walk = list->head;
+    while (p_walk->next != NULL)
+    {
+      previous_node = p_walk;
+      p_walk = p_walk->next;
+    }
+    list->last = previous_node;
+    previous_node->next = NULL;
+  }
+  list->count -= 1;
+  return Success;
+}
+
 Status clear_list(List_ptr list)
 {
   Node_ptr p_walk = list->head;

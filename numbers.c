@@ -34,6 +34,9 @@ void operate(List_ptr numbers, char choice)
   case 'e':
     remove_from_start(numbers);
     break;
+  case 'f':
+    remove_from_end(numbers);
+    break;
   }
 }
 
