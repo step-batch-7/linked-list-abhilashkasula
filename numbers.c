@@ -70,6 +70,10 @@ void operate(List_ptr numbers, char choice)
     read_number(NUMBER_TEXT, &value);
     remove_first_occurrence(numbers, value);
     break;
+  case 'i':
+    read_number(NUMBER_TEXT, &value);
+    remove_all_occurrences(numbers, value);
+    break;
   case 'j':
     clear_list(numbers);
     break;
