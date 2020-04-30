@@ -21,18 +21,7 @@ Node_ptr create_node(int value)
 
 Status add_to_end(List_ptr list, int value)
 {
-  Node_ptr new_node = create_node(value);
-  if (list->head == NULL)
-  {
-    list->head = new_node;
-  }
-  else
-  {
-    list->last->next = new_node;
-  }
-  list->last = new_node;
-  list->count += 1;
-  return Success;
+  return insert_at(list, value, list->count);
 }
 
 Status add_to_start(List_ptr list, int value)
@@ -50,23 +39,20 @@ Status add_to_start(List_ptr list, int value)
 
 Status insert_at(List_ptr list, int value, int position)
 {
-  printf("---%d %d---\n", position, list->count);
   if (position < 0 || position > list->count)
     return Failure;
   if (position == 0)
-    return add_to_start(list, value);
-  if (position == list->count)
-    return add_to_end(list, value);
-  Node_ptr new_node = create_node(value);
-  Node_ptr previous_node = NULL;
-  Node_ptr p_walk = list->head;
-  for (int i = 0; i < position; i++)
   {
-    previous_node = p_walk;
+    return add_to_start(list, value);
+  }
+  Node_ptr new_node = create_node(value);
+  Node_ptr p_walk = list->head;
+  for (int i = 1; i < position; i++)
+  {
     p_walk = p_walk->next;
   }
-  new_node->next = p_walk;
-  previous_node->next = new_node;
+  new_node->next = p_walk->next;
+  p_walk->next = new_node;
   list->count += 1;
   return Success;
 }
