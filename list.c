@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "list.h"
 
 List_ptr create_list(void)
@@ -32,4 +33,15 @@ Status add_to_end(List_ptr list, int value)
   list->last = new_node;
   list->count += 1;
   return Success;
+}
+
+void display(List_ptr list)
+{
+  Node_ptr p_walk = list->head;
+  while (p_walk != NULL)
+  {
+    printf("%d ", p_walk->value);
+    p_walk = p_walk->next;
+  }
+  printf("\n");
 }
