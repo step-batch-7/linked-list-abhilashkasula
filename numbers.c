@@ -2,16 +2,16 @@
 #include <stdlib.h>
 #include "list.h"
 
-void read_number(int *value)
+void read_number(char *text, int *value)
 {
-  printf("Enter a number:\n");
+  printf("%s\n", text);
   scanf("%d", value);
 }
 
 void search(List_ptr numbers)
 {
   int value;
-  read_number(&value);
+  read_number("Enter a number:", &value);
   Status includes = is_number_exists(numbers, value);
   if (includes)
   {
@@ -31,25 +31,20 @@ void operate(List_ptr numbers, char choice)
   switch (choice)
   {
   case 'a':
-    printf("Enter a number:\n");
-    scanf("%d", &value);
+    read_number("Enter a number:", &value);
     add_to_end(numbers, value);
     break;
   case 'b':
-    printf("Enter a number:\n");
-    scanf("%d", &value);
+    read_number("Enter a number:", &value);
     add_to_start(numbers, value);
     break;
   case 'c':
-    printf("Enter a number:\n");
-    scanf("%d", &value);
-    printf("Enter position:\n");
-    scanf("%d", &position);
+    read_number("Enter a number:", &value);
+    read_number("Enter position:", &position);
     insert_at(numbers, value, position);
     break;
   case 'd':
-    printf("Enter a number:\n");
-    scanf("%d", &value);
+    read_number("Enter a number:", &value);
     add_unique(numbers, value);
     break;
   case 'e':
