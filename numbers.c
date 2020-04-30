@@ -31,6 +31,9 @@ void operate(List_ptr numbers, char choice)
     scanf("%d", &value);
     add_unique(numbers, value);
     break;
+  case 'e':
+    remove_from_start(numbers);
+    break;
   }
 }
 

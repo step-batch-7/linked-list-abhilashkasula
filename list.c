@@ -99,6 +99,19 @@ void display(List_ptr list)
   printf("\n");
 }
 
+Status remove_from_start(List_ptr list)
+{
+  if (list->count <= 0)
+    return Failure;
+  if (list->count == 1)
+  {
+    list->last = NULL;
+  }
+  list->head = list->head->next;
+  list->count -= 1;
+  return Success;
+}
+
 Status clear_list(List_ptr list)
 {
   Node_ptr p_walk = list->head;
