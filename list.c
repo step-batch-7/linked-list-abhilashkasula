@@ -150,6 +150,22 @@ Status remove_at(List_ptr list, int position)
   return Success;
 }
 
+Status remove_first_occurrence(List_ptr list, int value)
+{
+  Status is_removed = Failure;
+  Status is_first_occurrence = Success;
+  Node_ptr p_walk = list->head;
+  for (int i = 0; i < list->count; i++, p_walk = p_walk->next)
+  {
+    if (p_walk->value == value && is_first_occurrence)
+    {
+      is_removed = remove_at(list, i);
+      is_first_occurrence = Failure;
+    }
+  }
+  return is_removed;
+}
+
 Status is_number_exists(List_ptr list, int value)
 {
   Status exist_status = Failure;
