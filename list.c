@@ -70,17 +70,7 @@ Status insert_at(List_ptr list, int value, int position)
 
 Status add_unique(List_ptr list, int value)
 {
-  Status is_value_absent = Success;
-  Node_ptr p_walk = list->head;
-  while (p_walk != NULL)
-  {
-    if (p_walk->value == value)
-    {
-      is_value_absent = Failure;
-    }
-    p_walk = p_walk->next;
-  }
-  return is_value_absent && add_to_end(list, value);
+  return !is_number_exists(list, value) && add_to_end(list, value);
 }
 
 void display(List_ptr list)
