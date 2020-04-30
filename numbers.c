@@ -86,7 +86,6 @@ int main(void)
   while (choice != 'm')
   {
     operate(numbers, choice);
-    display(numbers);
     read_choice(&choice);
   }
   return 0;
