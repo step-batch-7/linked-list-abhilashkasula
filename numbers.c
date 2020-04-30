@@ -53,9 +53,14 @@ void operate(List_ptr numbers, char choice)
   case 'f':
     remove_from_end(numbers);
     break;
+  case 'j':
+    clear_list(numbers);
+    break;
   case 'k':
     search(numbers);
     break;
+  case 'l':
+    display(numbers);
   }
 }
 
