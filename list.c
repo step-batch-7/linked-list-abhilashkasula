@@ -45,3 +45,19 @@ void display(List_ptr list)
   }
   printf("\n");
 }
+
+Status clear_list(List_ptr list)
+{
+  Node_ptr p_walk = list->head;
+  Node_ptr element_to_free = NULL;
+  while (p_walk != NULL)
+  {
+    element_to_free = p_walk;
+    p_walk = p_walk->next;
+    free(element_to_free);
+  }
+  list->head = NULL;
+  list->last = NULL;
+  list->count = 0;
+  return Success;
+}

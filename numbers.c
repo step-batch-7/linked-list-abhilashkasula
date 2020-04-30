@@ -6,5 +6,6 @@ int main(void)
   add_to_end(numbers, 5);
   add_to_end(numbers, 7);
   display(numbers);
+  clear_list(numbers);
   return 0;
 }
