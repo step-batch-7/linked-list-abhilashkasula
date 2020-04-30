@@ -62,6 +62,10 @@ void operate(List_ptr numbers, char choice)
   case 'f':
     remove_from_end(numbers);
     break;
+  case 'g':
+    read_number(POSITION_TEXT, &position);
+    remove_at(numbers, position);
+    break;
   case 'j':
     clear_list(numbers);
     break;
