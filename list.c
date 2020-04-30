@@ -69,6 +69,7 @@ Status insert_at(List_ptr list, int value, int position)
   }
   new_node->next = p_walk;
   previous_node->next = new_node;
+  list->count += 1;
   return Success;
 }
 
