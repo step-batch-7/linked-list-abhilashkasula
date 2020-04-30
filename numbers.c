@@ -2,6 +2,27 @@
 #include <stdlib.h>
 #include "list.h"
 
+void read_number(int *value)
+{
+  printf("Enter a number:\n");
+  scanf("%d", value);
+}
+
+void search(List_ptr numbers)
+{
+  int value;
+  read_number(&value);
+  Status includes = is_number_exists(numbers, value);
+  if (includes)
+  {
+    printf("%d exists\n", value);
+  }
+  else
+  {
+    printf("%d not exists\n", value);
+  }
+}
+
 void operate(List_ptr numbers, char choice)
 {
   int value;
@@ -36,6 +57,9 @@ void operate(List_ptr numbers, char choice)
     break;
   case 'f':
     remove_from_end(numbers);
+    break;
+  case 'k':
+    search(numbers);
     break;
   }
 }

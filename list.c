@@ -40,19 +40,17 @@ Status add_to_start(List_ptr list, int value)
   Node_ptr new_node = create_node(value);
   if (list->head == NULL)
   {
-    list->head = new_node;
+    list->last = new_node;
   }
-  else
-  {
-    new_node->next = list->head;
-    list->head = new_node;
-  }
+  new_node->next = list->head;
+  list->head = new_node;
   list->count += 1;
   return Success;
 }
 
 Status insert_at(List_ptr list, int value, int position)
 {
+  printf("---%d %d---\n", position, list->count);
   if (position < 0 || position > list->count)
     return Failure;
   if (position == 0)
@@ -135,6 +133,21 @@ Status remove_from_end(List_ptr list)
   }
   list->count -= 1;
   return Success;
+}
+
+Status is_number_exists(List_ptr list, int value)
+{
+  Status exist_status = Failure;
+  Node_ptr p_walk = list->head;
+  while (p_walk != NULL)
+  {
+    if (p_walk->value == value)
+    {
+      exist_status = Success;
+    }
+    p_walk = p_walk->next;
+  }
+  return exist_status;
 }
 
 Status clear_list(List_ptr list)
