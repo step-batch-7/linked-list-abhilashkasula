@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include "list.h"
 
+#define NUMBER_TEXT "Enter a number:"
+#define POSITION_TEXT "Enter position:"
+
 void read_number(char *, int *);
 void is_exists(List_ptr);
 void operate(List_ptr, char);
@@ -17,7 +20,7 @@ void read_number(char *text, int *value)
 void is_exists(List_ptr numbers)
 {
   int value;
-  read_number("Enter a number:", &value);
+  read_number(NUMBER_TEXT, &value);
   Status includes = is_number_exists(numbers, value);
   if (includes)
   {
@@ -37,20 +40,20 @@ void operate(List_ptr numbers, char choice)
   switch (choice)
   {
   case 'a':
-    read_number("Enter a number:", &value);
+    read_number(NUMBER_TEXT, &value);
     add_to_end(numbers, value);
     break;
   case 'b':
-    read_number("Enter a number:", &value);
+    read_number(NUMBER_TEXT, &value);
     add_to_start(numbers, value);
     break;
   case 'c':
-    read_number("Enter a number:", &value);
-    read_number("Enter position:", &position);
+    read_number(NUMBER_TEXT, &value);
+    read_number(POSITION_TEXT, &position);
     insert_at(numbers, value, position);
     break;
   case 'd':
-    read_number("Enter a number:", &value);
+    read_number(NUMBER_TEXT, &value);
     add_unique(numbers, value);
     break;
   case 'e':
@@ -75,7 +78,7 @@ void print_menu()
   printf("Main Menu\n---------\n");
   printf("(a) add a number to the end of the list\n(b) add a number to the start of the list\n");
   printf("(c) insert a number at a given position in the list\n");
-  printf("(d) add a unique item on the list at the end(if it alreay exists, do not insert)\n");
+  printf("(d) add a unique item on the list at the end(if it already exists, do not insert)\n");
   printf("(e) remove a number from the beginning of the list\n(f) remove a number from the end of the list\n");
   printf("(g) remove a number from a given position in the list\n(h) remove first occurrence of a number\n");
   printf("(i) remove all occurrences of a number\n(j) clear the whole list\n");
