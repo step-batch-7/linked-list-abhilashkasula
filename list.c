@@ -61,3 +61,9 @@ Status clear_list(List_ptr list)
   list->count = 0;
   return Success;
 }
+
+void destroy_list(List_ptr list)
+{
+  clear_list(list);
+  free(list);
+}

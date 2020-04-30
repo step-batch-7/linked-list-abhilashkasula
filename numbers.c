@@ -7,5 +7,6 @@ int main(void)
   add_to_end(numbers, 7);
   display(numbers);
   clear_list(numbers);
+  destroy_list(numbers);
   return 0;
 }
