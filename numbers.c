@@ -2,13 +2,19 @@
 #include <stdlib.h>
 #include "list.h"
 
+void read_number(char *, int *);
+void is_exists(List_ptr);
+void operate(List_ptr, char);
+void print_menu(void);
+void read_choice(char *);
+
 void read_number(char *text, int *value)
 {
   printf("%s\n", text);
   scanf("%d", value);
 }
 
-void search(List_ptr numbers)
+void is_exists(List_ptr numbers)
 {
   int value;
   read_number("Enter a number:", &value);
@@ -57,7 +63,7 @@ void operate(List_ptr numbers, char choice)
     clear_list(numbers);
     break;
   case 'k':
-    search(numbers);
+    is_exists(numbers);
     break;
   case 'l':
     display(numbers);
