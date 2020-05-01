@@ -36,7 +36,6 @@ void operate(List_ptr numbers, char choice)
 {
   int value;
   int position;
-  printf("---%c---\n", choice);
   switch (choice)
   {
   case 'a':
@@ -104,6 +103,13 @@ void read_choice(char *choice)
   scanf("%c", choice);
 }
 
+void clear_buffer()
+{
+  while (getchar() != '\n')
+  {
+  }
+}
+
 int main(void)
 {
   List_ptr numbers = create_list();
@@ -112,8 +118,7 @@ int main(void)
   while (choice != 'm')
   {
     operate(numbers, choice);
-    while ((getchar()) != '\n')
-      ;
+    clear_buffer();
     read_choice(&choice);
   }
   return 0;
