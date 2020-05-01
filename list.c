@@ -86,13 +86,15 @@ void display(List_ptr list)
 
 Status remove_from_start(List_ptr list)
 {
-  if (list->count <= 0)
+  if (list->head == NULL)
     return Failure;
   if (list->count == 1)
   {
     list->last = NULL;
   }
+  Node_ptr element_to_free = list->head;
   list->head = list->head->next;
+  free(element_to_free);
   list->count -= 1;
   return Success;
 }
