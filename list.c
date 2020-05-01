@@ -194,18 +194,12 @@ Status is_exists(List_ptr list, int value)
 
 Status clear_list(List_ptr list)
 {
-  Node_ptr p_walk = list->head;
-  Node_ptr element_to_free = NULL;
-  while (p_walk != NULL)
+  Status is_removed = Failure;
+  while (list->head != NULL)
   {
-    element_to_free = p_walk;
-    p_walk = p_walk->next;
-    free(element_to_free);
+    is_removed = remove_from_start(list);
   }
-  list->head = NULL;
-  list->last = NULL;
-  list->count = 0;
-  return Success;
+  return is_removed;
 }
 
 void destroy_list(List_ptr list)
