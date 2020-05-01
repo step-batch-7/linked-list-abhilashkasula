@@ -112,6 +112,8 @@ int main(void)
   while (choice != 'm')
   {
     operate(numbers, choice);
+    while ((getchar()) != '\n')
+      ;
     read_choice(&choice);
   }
   return 0;
