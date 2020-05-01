@@ -108,15 +108,13 @@ Status remove_from_end(List_ptr list)
   }
   else
   {
-    Node_ptr previous_node = NULL;
     Node_ptr p_walk = list->head;
-    while (p_walk->next != NULL)
+    while (p_walk->next->next != NULL)
     {
-      previous_node = p_walk;
       p_walk = p_walk->next;
     }
-    list->last = previous_node;
-    previous_node->next = NULL;
+    p_walk->next = NULL;
+    list->last = p_walk;
   }
   list->count -= 1;
   return Success;
