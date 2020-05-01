@@ -6,7 +6,7 @@
 #define POSITION_TEXT "Enter position:"
 
 void read_number(char *, int *);
-void is_exists(List_ptr);
+void is_number_exists(List_ptr);
 void operate(List_ptr, char);
 void print_menu(void);
 void read_choice(char *);
@@ -17,11 +17,11 @@ void read_number(char *text, int *value)
   scanf("%d", value);
 }
 
-void is_exists(List_ptr numbers)
+void is_number_exists(List_ptr numbers)
 {
   int value;
   read_number(NUMBER_TEXT, &value);
-  Status includes = is_number_exists(numbers, value);
+  Status includes = is_exists(numbers, value);
   if (includes)
   {
     printf("%d exists\n", value);
@@ -77,7 +77,7 @@ void operate(List_ptr numbers, char choice)
     clear_list(numbers);
     break;
   case 'k':
-    is_exists(numbers);
+    is_number_exists(numbers);
     break;
   case 'l':
     display(numbers);

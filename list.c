@@ -70,7 +70,7 @@ Status insert_at(List_ptr list, int value, int position)
 
 Status add_unique(List_ptr list, int value)
 {
-  return !is_number_exists(list, value) && add_to_end(list, value);
+  return !is_exists(list, value) && add_to_end(list, value);
 }
 
 void display(List_ptr list)
@@ -171,7 +171,7 @@ Status remove_all_occurrences(List_ptr list, int value)
   return is_removed;
 }
 
-Status is_number_exists(List_ptr list, int value)
+Status is_exists(List_ptr list, int value)
 {
   Status exist_status = Failure;
   Node_ptr p_walk = list->head;
