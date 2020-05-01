@@ -121,5 +121,6 @@ int main(void)
     clear_buffer();
     read_choice(&choice);
   }
+  destroy_list(numbers);
   return 0;
 }
