@@ -157,13 +157,13 @@ Status remove_first_occurrence(List_ptr list, int value)
 
 Status remove_all_occurrences(List_ptr list, int value)
 {
-  Status is_removed = Success;
+  Status is_removed = Failure;
   Node_ptr p_walk = list->head;
   for (int i = 0; p_walk != NULL; i++)
   {
-    if (p_walk->value == value && is_removed)
+    if (p_walk->value == value)
     {
-      is_removed &= remove_at(list, i);
+      is_removed = remove_at(list, i);
       i--;
     }
     p_walk = p_walk->next;
