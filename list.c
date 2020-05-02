@@ -83,7 +83,7 @@ Status insert_at(List_ptr list, int value, int position)
   }
   new_node->next = p_walk->next;
   p_walk->next = new_node;
-  list->count += 1;
+  list->count++;
   return Success;
 }
 
@@ -117,32 +117,37 @@ Status remove_from_start(List_ptr list)
   Node_ptr element_to_free = list->head;
   list->head = list->head->next;
   free(element_to_free);
-  list->count -= 1;
+  list->count--;
   return Success;
 }
 
 Status remove_from_end(List_ptr list)
 {
-  if (list->count <= 0)
-    return Failure;
-  if (list->head->next == NULL)
+  if (list->head == NULL)
   {
-    free(list->head);
+    return Failure;
+  }
+
+  Node_ptr previous = NULL;
+  Node_ptr current = list->head;
+
+  while (current->next != NULL)
+  {
+    previous = current;
+    current = current->next;
+  }
+  if (previous == NULL)
+  {
     list->head = NULL;
-    list->last = NULL;
   }
   else
   {
-    Node_ptr p_walk = list->head;
-    while (p_walk->next->next != NULL)
-    {
-      p_walk = p_walk->next;
-    }
-    free(p_walk->next);
-    p_walk->next = NULL;
-    list->last = p_walk;
+    previous->next = NULL;
   }
-  list->count -= 1;
+
+  list->last = previous;
+  free(current);
+  list->count--;
   return Success;
 }
 
