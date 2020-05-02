@@ -14,14 +14,21 @@ List_ptr create_list(void)
 Node_ptr create_node(int value)
 {
   Node_ptr new_node = malloc(sizeof(Node));
-  new_node->value = value;
-  new_node->next = NULL;
+  if (new_node != NULL)
+  {
+    new_node->value = value;
+    new_node->next = NULL;
+  }
   return new_node;
 }
 
 Status add_to_end(List_ptr list, int value)
 {
   Node_ptr new_node = create_node(value);
+  if (new_node == NULL)
+  {
+    return Failure;
+  }
   Node_ptr *ptr_to_set = &list->head;
   if (list->head != NULL)
   {
@@ -36,6 +43,10 @@ Status add_to_end(List_ptr list, int value)
 Status add_to_start(List_ptr list, int value)
 {
   Node_ptr new_node = create_node(value);
+  if (new_node == NULL)
+  {
+    return Failure;
+  }
   if (list->head == NULL)
   {
     list->last = new_node;
@@ -55,6 +66,10 @@ Status insert_at(List_ptr list, int value, int position)
   if (position == list->count)
     return add_to_end(list, value);
   Node_ptr new_node = create_node(value);
+  if (new_node == NULL)
+  {
+    return Failure;
+  }
   Node_ptr p_walk = list->head;
   for (int i = 1; i < position; i++)
   {
