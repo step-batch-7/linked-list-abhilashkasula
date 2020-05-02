@@ -29,6 +29,7 @@ Status add_to_end(List_ptr list, int value)
   {
     return Failure;
   }
+
   Node_ptr *ptr_to_set = &list->head;
   if (list->head != NULL)
   {
@@ -51,9 +52,10 @@ Status add_to_start(List_ptr list, int value)
   {
     list->last = new_node;
   }
+
   new_node->next = list->head;
   list->head = new_node;
-  list->count += 1;
+  list->count++;
   return Success;
 }
 
@@ -104,11 +106,14 @@ void display(List_ptr list)
 Status remove_from_start(List_ptr list)
 {
   if (list->head == NULL)
+  {
     return Failure;
-  if (list->count == 1)
+  }
+  if (list->head->next == NULL)
   {
     list->last = NULL;
   }
+
   Node_ptr element_to_free = list->head;
   list->head = list->head->next;
   free(element_to_free);
