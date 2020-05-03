@@ -113,6 +113,12 @@ void clear_buffer()
 int main(void)
 {
   List_ptr numbers = create_list();
+
+  if (numbers == NULL)
+  {
+    return 1;
+  }
+
   char choice;
   read_choice(&choice);
   while (choice != 'm')
