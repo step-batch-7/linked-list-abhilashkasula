@@ -325,6 +325,27 @@ void test_remove_all_occurrences(void)
   destroy_list(list);
 }
 
+void test_clear_list(void)
+{
+  printf("clear_list\n");
+
+  List_ptr list = create_list();
+  add_to_end(list, 1);
+  add_to_end(list, 2);
+  add_to_end(list, 3);
+  int expected_list[] = {};
+
+  printf("\tshould remove all the elements in the list\n");
+  display_assertion(assert(clear_list(list), Success), SUCCESS_TEXT);
+  display_assertion(assert_list(list, expected_list, 0), "List should be empty");
+
+  printf("\tshould get Failure status for empty list\n");
+  display_assertion(assert(clear_list(list), Failure), FAILURE_TEXT);
+  display_assertion(assert_list(list, expected_list, 0), "List should be empty");
+
+  destroy_list(list);
+}
+
 int main(void)
 {
   test_add_to_end();
@@ -336,5 +357,6 @@ int main(void)
   test_remove_at();
   test_remove_first_occurrence();
   test_remove_all_occurrences();
+  test_clear_list();
   return 0;
 }
