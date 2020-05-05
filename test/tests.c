@@ -216,6 +216,49 @@ void test_remove_from_end(void)
 
   printf("\tshoud give Failure status for list is empty\n");
   display_assertion(assert(remove_from_end(list), Failure), FAILURE_TEXT);
+  destroy_list(list);
+}
+
+void test_remove_at(void)
+{
+  printf("remove_at\n");
+
+  List_ptr list = create_list();
+  for (int i = 1; i <= 5; i++)
+  {
+    add_to_end(list, i);
+  }
+  int expected_list[5] = {1, 2, 3, 4, 5};
+
+  printf("\tshouldn't remove number for the position out of range\n");
+  printf("\t   for position 10\n");
+  display_assertion(assert(remove_at(list, 10), Failure), FAILURE_TEXT);
+  display_assertion(assert_list(list, expected_list, 5), "List shouldn't modify");
+  printf("\t   for position -1\n");
+  display_assertion(assert(remove_at(list, -1), Failure), FAILURE_TEXT);
+  display_assertion(assert_list(list, expected_list, 5), "List shouldn't modify");
+
+  printf("\tshould remove the last value for position 4\n");
+  display_assertion(assert(remove_at(list, 4), Success), SUCCESS_TEXT);
+  display_assertion(assert_list(list, expected_list, 4), "Last value should get deleted");
+
+  printf("\tshould remove the number from the middle at position 2\n");
+  display_assertion(assert(remove_at(list, 2), Success), SUCCESS_TEXT);
+  expected_list[2] = expected_list[3];
+  expected_list[3] = expected_list[4];
+  display_assertion(assert_list(list, expected_list, 3), "Value at 2 should be deleted");
+
+  printf("\tshould remove the number from the star at position 0\n");
+  display_assertion(assert(remove_at(list, 0), Success), SUCCESS_TEXT);
+  expected_list[0] = expected_list[1];
+  expected_list[1] = expected_list[2];
+  display_assertion(assert_list(list, expected_list, 2), "Value at 0 should be deleted");
+
+  printf("\tshould remove the number at pos 1 for two elements in list\n");
+  display_assertion(assert(remove_at(list, 1), Success), SUCCESS_TEXT);
+  display_assertion(assert_list(list, expected_list, 1), "Value at 1 should get deleted");
+
+  destroy_list(list);
 }
 
 int main(void)
@@ -226,5 +269,6 @@ int main(void)
   test_add_unique();
   test_remove_from_start();
   test_remove_from_end();
+  test_remove_at();
   return 0;
 }
