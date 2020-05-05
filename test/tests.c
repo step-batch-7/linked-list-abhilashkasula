@@ -346,6 +346,21 @@ void test_clear_list(void)
   destroy_list(list);
 }
 
+void test_is_number_exists(void)
+{
+  printf("is_number_exists\n");
+
+  List_ptr list = create_list();
+  add_to_end(list, 1);
+  add_to_end(list, 2);
+
+  printf("\tshould get Success status for the element exists\n");
+  display_assertion(assert(is_exists(list, 1), Success), SUCCESS_TEXT);
+
+  printf("\tshould get Failure status for the element not exists\n");
+  display_assertion(assert(is_exists(list, 5), Failure), FAILURE_TEXT);
+}
+
 int main(void)
 {
   test_add_to_end();
@@ -358,5 +373,6 @@ int main(void)
   test_remove_first_occurrence();
   test_remove_all_occurrences();
   test_clear_list();
+  test_is_number_exists();
   return 0;
 }
