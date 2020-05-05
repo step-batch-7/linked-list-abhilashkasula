@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include "../list.h"
 
+#define SUCCESS_TEXT "Status should be Success"
+#define FAILURE_TEXT "Status should be Failure"
+
 unsigned int assert_list(List_ptr, int *, int);
 
 unsigned int assert_list(List_ptr list, int *values, int length)
@@ -31,30 +34,42 @@ void insert_in_array_at(int *array, int length, int value, int pos)
   array[pos] = value;
 }
 
+void display_assertion(Status status, char *text)
+{
+  if (status)
+  {
+    printf("\t\t✅  %s\n", text);
+  }
+  else
+  {
+    printf("\t\t❌  %s\n", text);
+  }
+}
+
 void test_add_to_end(void)
 {
   printf("add_to_end\n");
 
   List_ptr list = create_list();
   int expected_list[4] = {};
-  printf("\tNo values: %d\n", assert_list(list, expected_list, 0));
+  display_assertion(assert_list(list, expected_list, 0), "No values");
 
   printf("\tshould add a number to list when there are no elements\n");
-  printf("\t\tStatus should be Success: %d\n", assert(add_to_end(list, 1), Success));
+  display_assertion(assert(add_to_end(list, 1), Success), SUCCESS_TEXT);
   expected_list[0] = 1;
-  printf("\t\tList values should be [1]: %d\n", assert_list(list, expected_list, 1));
+  display_assertion(assert_list(list, expected_list, 1), "List values should be [1]");
 
   printf("\tshould add a number at last when there is an element in the list\n");
-  printf("\t\tStatus should be Success: %d\n", assert(add_to_end(list, 2), Success));
+  display_assertion(assert(add_to_end(list, 2), Success), SUCCESS_TEXT);
   expected_list[1] = 2;
-  printf("\t\tList values should be [1, 2]: %d\n", assert_list(list, expected_list, 2));
+  display_assertion(assert_list(list, expected_list, 2), "List values should be [1, 2]");
 
   printf("\tshould add a number at last when there are more than two elements in it\n");
   add_to_end(list, 3);
   expected_list[2] = 3;
-  printf("\t\tStatus should be Success: %d\n", assert(add_to_end(list, 4), Success));
+  display_assertion(assert(add_to_end(list, 4), Success), SUCCESS_TEXT);
   expected_list[3] = 4;
-  printf("\t\tList values should be [1, 2, 3, 4]: %d\n", assert_list(list, expected_list, 4));
+  display_assertion(assert_list(list, expected_list, 4), "List values should be [1, 2, 3, 4]");
   destroy_list(list);
 }
 
@@ -64,24 +79,23 @@ void test_add_to_start(void)
 
   List_ptr list = create_list();
   int expected_list[4] = {};
-  printf("\tNo values: %d\n", assert_list(list, expected_list, 0));
 
   printf("\tshould add a number at first when there are no elements\n");
-  printf("\t\tStatus should be Success: %d\n", assert(add_to_start(list, 1), Success));
+  display_assertion(assert(add_to_start(list, 1), Success), SUCCESS_TEXT);
   insert_in_array_at(expected_list, 0, 1, 0);
-  printf("\t\tList values should be [1]: %d\n", assert_list(list, expected_list, 1));
+  display_assertion(assert_list(list, expected_list, 1), "List values should be [1]");
 
   printf("\tshould add a number at first when there is an element\n");
-  printf("\t\tStatus should be Success: %d\n", assert(add_to_start(list, 2), Success));
+  display_assertion(assert(add_to_start(list, 2), Success), SUCCESS_TEXT);
   insert_in_array_at(expected_list, 1, 2, 0);
-  printf("\t\tList values should be [2, 1]: %d\n", assert_list(list, expected_list, 2));
+  display_assertion(assert_list(list, expected_list, 2), "List values should be [2, 1]");
 
   printf("\tshould add a number at first when there are more than 2 elements\n");
   add_to_start(list, 3);
   insert_in_array_at(expected_list, 2, 3, 0);
-  printf("\t\tStatus should be Success: %d\n", assert(add_to_start(list, 4), Success));
+  display_assertion(assert(add_to_start(list, 4), Success), SUCCESS_TEXT);
   insert_in_array_at(expected_list, 3, 4, 0);
-  printf("\t\tList values should be [4, 3, 2, 1]: %d\n", assert_list(list, expected_list, 4));
+  display_assertion(assert_list(list, expected_list, 4), "List values should be [4, 3, 2, 1]");
   destroy_list(list);
 }
 
@@ -91,40 +105,39 @@ void test_insert_at(void)
 
   List_ptr list = create_list();
   int expected_list[5] = {};
-  printf("\tNo values: %d\n", assert_list(list, expected_list, 0));
 
   printf("\tshould not add a number for the position 1 when the list is empty\n");
-  printf("\t\tStatus should be Failure: %d\n", assert(insert_at(list, 1, 1), Failure));
-  printf("\t\tList values should be empty: %d\n", assert_list(list, expected_list, 0));
+  display_assertion(assert(insert_at(list, 1, 1), Failure), FAILURE_TEXT);
+  display_assertion(assert_list(list, expected_list, 0), "List values should be empty");
 
   printf("\tshould add number 1 for the position 0 when the list is empty\n");
-  printf("\t\tStatus should be Success: %d\n", assert(insert_at(list, 1, 0), Success));
+  display_assertion(assert(insert_at(list, 1, 0), Success), SUCCESS_TEXT);
   expected_list[0] = 1;
-  printf("\t\tList values should be [1]: %d\n", assert_list(list, expected_list, 1));
+  display_assertion(assert_list(list, expected_list, 1), "List values should be [1]");
 
   printf("\tshould add number 2 for the position 1 when the list contains only one number\n");
-  printf("\t\tStatus should be Success: %d\n", assert(insert_at(list, 2, 1), Success));
+  display_assertion(assert(insert_at(list, 2, 1), Success), SUCCESS_TEXT);
   expected_list[1] = 2;
-  printf("\t\tList values should be [1, 2]: %d\n", assert_list(list, expected_list, 2));
+  display_assertion(assert_list(list, expected_list, 2), "List values should be [1, 2]");
 
   printf("\tshouldn't add number for the position out of range\n");
-  printf("\t\tStatus should be Failure: %d\n", assert(insert_at(list, 3, 8), Failure));
-  printf("\t\tList values shouldn't be changed: %d\n", assert_list(list, expected_list, 2));
+  display_assertion(assert(insert_at(list, 3, 8), Failure), FAILURE_TEXT);
+  display_assertion(assert_list(list, expected_list, 2), "List values shouldn't be changed");
 
   printf("\tshould add number 3 at position 0 when values are present\n");
-  printf("\t\tStatus should be Success: %d\n", assert(insert_at(list, 3, 0), Success));
+  display_assertion(assert(insert_at(list, 3, 0), Success), SUCCESS_TEXT);
   insert_in_array_at(expected_list, 2, 3, 0);
-  printf("\t\tList values should be [3, 1, 2]: %d\n", assert_list(list, expected_list, 3));
+  display_assertion(assert_list(list, expected_list, 3), "List values should be [3, 1, 2]");
 
   printf("\tshould add number 4 at position 3 when the count of the list is 3\n");
-  printf("\t\tStatus should be Success: %d\n", assert(insert_at(list, 4, 3), Success));
+  display_assertion(assert(insert_at(list, 4, 3), Success), SUCCESS_TEXT);
   expected_list[3] = 4;
-  printf("\t\tList values should be [3, 1, 2, 4]: %d\n", assert_list(list, expected_list, 4));
+  display_assertion(assert_list(list, expected_list, 4), "List values should be [3, 1, 2, 4]");
 
   printf("\tshould add number 5 at in the middle of the list at position 2\n");
-  printf("\t\tStatus should be Success: %d\n", assert(insert_at(list, 5, 2), Success));
+  display_assertion(assert(insert_at(list, 5, 2), Success), SUCCESS_TEXT);
   insert_in_array_at(expected_list, 4, 5, 2);
-  printf("\t\tList values should be [3, 1, 5, 2, 4]: %d\n", assert_list(list, expected_list, 5));
+  display_assertion(assert_list(list, expected_list, 5), "List values should be [3, 1, 5, 2, 4]");
   destroy_list(list);
 }
 
@@ -135,21 +148,20 @@ void test_add_unique(void)
   List_ptr list = create_list();
   int expected_list[2];
 
-  printf("\tNo values: %d\n", assert_list(list, expected_list, 0));
-
   printf("\tshould add number 1 when the list is empty\n");
-  printf("\t\tStatus should be Success: %d\n", assert(add_unique(list, 1), Success));
+  display_assertion(assert(add_unique(list, 1), Success), SUCCESS_TEXT);
   expected_list[0] = 1;
-  printf("\t\tList values should be [1]: %d\n", assert_list(list, expected_list, 1));
+  display_assertion(assert_list(list, expected_list, 1), "List values should be [1]");
 
   printf("\tshouldn't add number 1 again\n");
-  printf("\t\tStatus should be Failure: %d\n", assert(add_unique(list, 1), Failure));
-  printf("\t\tList values should be [1]: %d\n", assert_list(list, expected_list, 1));
+  display_assertion(assert(add_unique(list, 1), Failure), FAILURE_TEXT);
+  display_assertion(assert_list(list, expected_list, 1), "List values should be [1]");
 
   printf("\tshould add number 2\n");
-  printf("\t\tStatus should be Success: %d\n", assert(add_unique(list, 2), Success));
+  display_assertion(assert(add_unique(list, 2), Success), SUCCESS_TEXT);
   expected_list[1] = 2;
-  printf("\t\tList values should be [1, 2]: %d\n", assert_list(list, expected_list, 2));
+  display_assertion(assert_list(list, expected_list, 2), "List values should be [1, 2]");
+  destroy_list(list);
 }
 
 int main(void)
