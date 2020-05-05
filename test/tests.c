@@ -189,6 +189,33 @@ void test_remove_from_start(void)
 
   printf("\tshould give Failure status for list is empty\n");
   display_assertion(assert(remove_from_start(list), Failure), FAILURE_TEXT);
+  destroy_list(list);
+}
+
+void test_remove_from_end(void)
+{
+  printf("remove_from_end\n");
+
+  List_ptr list = create_list();
+  add_to_end(list, 1);
+  add_to_end(list, 2);
+  add_to_end(list, 3);
+  int expected_list[2] = {1, 2};
+
+  printf("\tshould remove number from the end when there are more than 2 values\n");
+  display_assertion(assert(remove_from_end(list), Success), SUCCESS_TEXT);
+  display_assertion(assert_list(list, expected_list, 2), "Last value should get deleted");
+
+  printf("\tshould remove last number when ther are only two elements\n");
+  display_assertion(assert(remove_from_end(list), Success), SUCCESS_TEXT);
+  display_assertion(assert_list(list, expected_list, 1), "Last value should get deleted");
+
+  printf("\tshould remove the number when there is only one element\n");
+  display_assertion(assert(remove_from_end(list), Success), SUCCESS_TEXT);
+  display_assertion(assert_list(list, expected_list, 0), "Value should get deleted");
+
+  printf("\tshoud give Failure status for list is empty\n");
+  display_assertion(assert(remove_from_end(list), Failure), FAILURE_TEXT);
 }
 
 int main(void)
@@ -198,5 +225,6 @@ int main(void)
   test_insert_at();
   test_add_unique();
   test_remove_from_start();
+  test_remove_from_end();
   return 0;
 }
