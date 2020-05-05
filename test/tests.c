@@ -125,6 +125,31 @@ void test_insert_at(void)
   printf("\t\tStatus should be Success: %d\n", assert(insert_at(list, 5, 2), Success));
   insert_in_array_at(expected_list, 4, 5, 2);
   printf("\t\tList values should be [3, 1, 5, 2, 4]: %d\n", assert_list(list, expected_list, 5));
+  destroy_list(list);
+}
+
+void test_add_unique(void)
+{
+  printf("add_unique\n");
+
+  List_ptr list = create_list();
+  int expected_list[2];
+
+  printf("\tNo values: %d\n", assert_list(list, expected_list, 0));
+
+  printf("\tshould add number 1 when the list is empty\n");
+  printf("\t\tStatus should be Success: %d\n", assert(add_unique(list, 1), Success));
+  expected_list[0] = 1;
+  printf("\t\tList values should be [1]: %d\n", assert_list(list, expected_list, 1));
+
+  printf("\tshouldn't add number 1 again\n");
+  printf("\t\tStatus should be Failure: %d\n", assert(add_unique(list, 1), Failure));
+  printf("\t\tList values should be [1]: %d\n", assert_list(list, expected_list, 1));
+
+  printf("\tshould add number 2\n");
+  printf("\t\tStatus should be Success: %d\n", assert(add_unique(list, 2), Success));
+  expected_list[1] = 2;
+  printf("\t\tList values should be [1, 2]: %d\n", assert_list(list, expected_list, 2));
 }
 
 int main(void)
@@ -132,5 +157,6 @@ int main(void)
   test_add_to_end();
   test_add_to_start();
   test_insert_at();
+  test_add_unique();
   return 0;
 }
