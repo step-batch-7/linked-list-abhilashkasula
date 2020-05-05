@@ -46,6 +46,7 @@ void test_add_to_end(void)
   printf("\t\tStatus should be Success: %d\n", assert(add_to_end(list, 4), Success));
   values[3] = 4;
   printf("\t\tList values should be [1, 2, 3, 4]: %d\n", assert_list(list, values, 4));
+  destroy_list(list);
 }
 
 void test_add_to_start(void)
@@ -75,6 +76,7 @@ void test_add_to_start(void)
   values[2] = 2;
   values[3] = 1;
   printf("\t\tList values should be [4, 3, 2, 1]: %d\n", assert_list(list, values, 4));
+  destroy_list(list);
 }
 
 int main(void)
