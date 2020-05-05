@@ -164,11 +164,39 @@ void test_add_unique(void)
   destroy_list(list);
 }
 
+void test_remove_from_start(void)
+{
+  printf("remove_from_start\n");
+
+  List_ptr list = create_list();
+  add_to_end(list, 1);
+  add_to_end(list, 2);
+  add_to_end(list, 3);
+  int expected_list[2] = {2, 3};
+
+  printf("\tshould remove number from the start when there are more than 2 values\n");
+  display_assertion(assert(remove_from_start(list), Success), SUCCESS_TEXT);
+  display_assertion(assert_list(list, expected_list, 2), "Value should be deleted");
+
+  printf("\tshould remove number form start when there are two values\n");
+  display_assertion(assert(remove_from_start(list), Success), SUCCESS_TEXT);
+  expected_list[0] = 3;
+  display_assertion(assert_list(list, expected_list, 1), "Value should be deleted");
+
+  printf("\tshould remove number when there is only one element\n");
+  display_assertion(assert(remove_from_start(list), Success), SUCCESS_TEXT);
+  display_assertion(assert_list(list, expected_list, 0), "List should be empty");
+
+  printf("\tshould give Failure status for list is empty\n");
+  display_assertion(assert(remove_from_start(list), Failure), FAILURE_TEXT);
+}
+
 int main(void)
 {
   test_add_to_end();
   test_add_to_start();
   test_insert_at();
   test_add_unique();
+  test_remove_from_start();
   return 0;
 }
