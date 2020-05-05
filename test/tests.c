@@ -291,6 +291,40 @@ void test_remove_first_occurrence(void)
   destroy_list(list);
 }
 
+void test_remove_all_occurrences(void)
+{
+  printf("remove_all_occurrences\n");
+
+  List_ptr list = create_list();
+  add_to_end(list, 2);
+  add_to_end(list, 3);
+  add_to_end(list, 2);
+  add_to_end(list, 4);
+  int expected_list[2] = {3, 4};
+
+  printf("\tshould remove all occurrences of a value\n");
+  display_assertion(assert(remove_all_occurrences(list, 2), Success), SUCCESS_TEXT);
+  display_assertion(assert_list(list, expected_list, 2), "Values should get deleted");
+
+  printf("\tshould get Failure status for no occurrence found\n");
+  display_assertion(assert(remove_all_occurrences(list, 10), Failure), FAILURE_TEXT);
+  display_assertion(assert_list(list, expected_list, 2), "Values should no modified");
+
+  printf("\tshould remove one value when it is a unique value\n");
+  display_assertion(assert(remove_all_occurrences(list, 4), Success), SUCCESS_TEXT);
+  display_assertion(assert_list(list, expected_list, 1), "One value get deleted");
+
+  printf("\tshould remove one value when there is only one element in list\n");
+  display_assertion(assert(remove_all_occurrences(list, 3), Success), SUCCESS_TEXT);
+  display_assertion(assert_list(list, expected_list, 0), "One value get deleted");
+
+  printf("\tshould get Failure for list is empty\n");
+  display_assertion(assert(remove_all_occurrences(list, 1), Failure), FAILURE_TEXT);
+  display_assertion(assert_list(list, expected_list, 0), "List is empty");
+
+  destroy_list(list);
+}
+
 int main(void)
 {
   test_add_to_end();
@@ -301,5 +335,6 @@ int main(void)
   test_remove_from_end();
   test_remove_at();
   test_remove_first_occurrence();
+  test_remove_all_occurrences();
   return 0;
 }
