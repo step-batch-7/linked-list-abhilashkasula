@@ -359,6 +359,8 @@ void test_is_number_exists(void)
 
   printf("\tshould get Failure status for the element not exists\n");
   display_assertion(assert(is_exists(list, 5), Failure), FAILURE_TEXT);
+
+  destroy_list(list);
 }
 
 int main(void)
