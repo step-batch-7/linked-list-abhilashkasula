@@ -70,6 +70,7 @@ void test_add_to_end(void)
   display_assertion(assert(add_to_end(list, 4), Success), SUCCESS_TEXT);
   expected_list[3] = 4;
   display_assertion(assert_list(list, expected_list, 4), "List values should be [1, 2, 3, 4]");
+
   destroy_list(list);
 }
 
@@ -96,6 +97,7 @@ void test_add_to_start(void)
   display_assertion(assert(add_to_start(list, 4), Success), SUCCESS_TEXT);
   insert_in_array_at(expected_list, 3, 4, 0);
   display_assertion(assert_list(list, expected_list, 4), "List values should be [4, 3, 2, 1]");
+
   destroy_list(list);
 }
 
@@ -138,6 +140,7 @@ void test_insert_at(void)
   display_assertion(assert(insert_at(list, 5, 2), Success), SUCCESS_TEXT);
   insert_in_array_at(expected_list, 4, 5, 2);
   display_assertion(assert_list(list, expected_list, 5), "List values should be [3, 1, 5, 2, 4]");
+
   destroy_list(list);
 }
 
@@ -161,6 +164,7 @@ void test_add_unique(void)
   display_assertion(assert(add_unique(list, 2), Success), SUCCESS_TEXT);
   expected_list[1] = 2;
   display_assertion(assert_list(list, expected_list, 2), "List values should be [1, 2]");
+
   destroy_list(list);
 }
 
@@ -189,6 +193,7 @@ void test_remove_from_start(void)
 
   printf("\tshould give Failure status for list is empty\n");
   display_assertion(assert(remove_from_start(list), Failure), FAILURE_TEXT);
+
   destroy_list(list);
 }
 
@@ -214,8 +219,9 @@ void test_remove_from_end(void)
   display_assertion(assert(remove_from_end(list), Success), SUCCESS_TEXT);
   display_assertion(assert_list(list, expected_list, 0), "Value should get deleted");
 
-  printf("\tshoud give Failure status for list is empty\n");
+  printf("\tshould give Failure status for list is empty\n");
   display_assertion(assert(remove_from_end(list), Failure), FAILURE_TEXT);
+
   destroy_list(list);
 }
 
@@ -261,6 +267,30 @@ void test_remove_at(void)
   destroy_list(list);
 }
 
+void test_remove_first_occurrence(void)
+{
+  printf("remove_first_occurrence\n");
+
+  List_ptr list = create_list();
+  add_to_end(list, 2);
+  add_to_end(list, 2);
+  int expected_list[1] = {2};
+
+  printf("\tshould remove first occurrence\n");
+  display_assertion(assert(remove_first_occurrence(list, 2), Success), SUCCESS_TEXT);
+  display_assertion(assert_list(list, expected_list, 1), "First value should get deleted");
+
+  printf("\tshould get Failure status when the number is not present to delete\n");
+  display_assertion(assert(remove_first_occurrence(list, 5), Failure), SUCCESS_TEXT);
+  display_assertion(assert_list(list, expected_list, 1), "List is not modified");
+
+  printf("\tshould remove the value when there is only one element\n");
+  display_assertion(assert(remove_first_occurrence(list, 2), Success), SUCCESS_TEXT);
+  display_assertion(assert_list(list, expected_list, 0), "List should be empty");
+
+  destroy_list(list);
+}
+
 int main(void)
 {
   test_add_to_end();
@@ -270,5 +300,6 @@ int main(void)
   test_remove_from_start();
   test_remove_from_end();
   test_remove_at();
+  test_remove_first_occurrence();
   return 0;
 }
