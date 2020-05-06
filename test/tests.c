@@ -1,29 +1,9 @@
 #include <stdio.h>
 #include "../list.h"
+#include "assert.h"
 
 #define SUCCESS_TEXT "Status should be Success"
 #define FAILURE_TEXT "Status should be Failure"
-
-unsigned int assert_list(List_ptr, int *, int);
-
-unsigned int assert_list(List_ptr list, int *values, int length)
-{
-  if (list->count != length)
-    return 0;
-  unsigned int is_equal = Success;
-  Node_ptr p_walk = list->head;
-  for (int i = 0; i < list->count; i++)
-  {
-    is_equal &= p_walk->value == values[i];
-    p_walk = p_walk->next;
-  }
-  return is_equal;
-}
-
-Status assert(Status actual_status, Status expected)
-{
-  return actual_status == expected;
-}
 
 void insert_in_array_at(int *array, int length, int value, int pos)
 {
@@ -32,18 +12,6 @@ void insert_in_array_at(int *array, int length, int value, int pos)
     array[i] = array[i - 1];
   }
   array[pos] = value;
-}
-
-void display_assertion(Status status, char *text)
-{
-  if (status)
-  {
-    printf("\t\t✅  %s\n", text);
-  }
-  else
-  {
-    printf("\t\t❌  %s\n", text);
-  }
 }
 
 void test_add_to_end(void)
