@@ -5,11 +5,7 @@
 #define NUMBER_TEXT "Enter a number:"
 #define POSITION_TEXT "Enter position:"
 
-void read_number(char *, int *);
-void is_number_exists(List_ptr);
-void operate(List_ptr, char);
-void print_menu(void);
-void read_choice(char *);
+typedef void (*Operate_on_list)(List_ptr);
 
 void read_number(char *text, int *value)
 {
@@ -17,7 +13,7 @@ void read_number(char *text, int *value)
   scanf("%d", value);
 }
 
-void is_number_exists(List_ptr numbers)
+void print_exist_status(List_ptr numbers)
 {
   int value;
   read_number(NUMBER_TEXT, &value);
@@ -32,56 +28,97 @@ void is_number_exists(List_ptr numbers)
   }
 }
 
-void operate(List_ptr numbers, char choice)
+void perform_add_to_end(List_ptr numbers)
 {
   int value;
+  read_number(NUMBER_TEXT, &value);
+  add_to_end(numbers, value);
+}
+
+void perform_add_to_start(List_ptr numbers)
+{
+  int value;
+  read_number(NUMBER_TEXT, &value);
+  add_to_start(numbers, value);
+}
+
+void perform_insert_at(List_ptr numbers)
+{
+  int value, position;
+  read_number(NUMBER_TEXT, &value);
+  read_number(POSITION_TEXT, &position);
+  insert_at(numbers, value, position);
+}
+
+void perform_add_unique(List_ptr numbers)
+{
+  int value;
+  read_number(NUMBER_TEXT, &value);
+  add_unique(numbers, value);
+}
+
+void perform_remove_from_start(List_ptr numbers)
+{
+  remove_from_start(numbers);
+}
+
+void perform_remove_from_end(List_ptr numbers)
+{
+  remove_from_end(numbers);
+}
+
+void perform_remove_at(List_ptr numbers)
+{
   int position;
-  switch (choice)
+  read_number(POSITION_TEXT, &position);
+  remove_at(numbers, position);
+}
+
+void perform_remove_first_occurrence(List_ptr numbers)
+{
+  int value;
+  read_number(NUMBER_TEXT, &value);
+  remove_first_occurrence(numbers, value);
+}
+
+void perform_remove_all_occurrences(List_ptr numbers)
+{
+  int value;
+  read_number(NUMBER_TEXT, &value);
+  remove_all_occurrences(numbers, value);
+}
+
+void perform_clear_list(List_ptr numbers)
+{
+  clear_list(numbers);
+}
+
+void operate(List_ptr numbers, char choice)
+{
+  Operate_on_list operations[12] = {
+      &perform_add_to_end,
+      &perform_add_to_start,
+      &perform_insert_at,
+      &perform_add_unique,
+      &perform_remove_from_start,
+      &perform_remove_from_end,
+      &perform_remove_at,
+      &perform_remove_first_occurrence,
+      &perform_remove_all_occurrences,
+      &perform_clear_list,
+      &print_exist_status,
+      &display};
+
+  unsigned int operation_index = choice % 97;
+
+  if (operation_index > 11 || operation_index < 0)
   {
-  case 'a':
-    read_number(NUMBER_TEXT, &value);
-    add_to_end(numbers, value);
-    break;
-  case 'b':
-    read_number(NUMBER_TEXT, &value);
-    add_to_start(numbers, value);
-    break;
-  case 'c':
-    read_number(NUMBER_TEXT, &value);
-    read_number(POSITION_TEXT, &position);
-    insert_at(numbers, value, position);
-    break;
-  case 'd':
-    read_number(NUMBER_TEXT, &value);
-    add_unique(numbers, value);
-    break;
-  case 'e':
-    remove_from_start(numbers);
-    break;
-  case 'f':
-    remove_from_end(numbers);
-    break;
-  case 'g':
-    read_number(POSITION_TEXT, &position);
-    remove_at(numbers, position);
-    break;
-  case 'h':
-    read_number(NUMBER_TEXT, &value);
-    remove_first_occurrence(numbers, value);
-    break;
-  case 'i':
-    read_number(NUMBER_TEXT, &value);
-    remove_all_occurrences(numbers, value);
-    break;
-  case 'j':
-    clear_list(numbers);
-    break;
-  case 'k':
-    is_number_exists(numbers);
-    break;
-  case 'l':
-    display(numbers);
+    printf("Please enter a valid choice\n");
+    return;
   }
+
+  Operate_on_list operation = operations[choice % 97];
+  operation(numbers);
 }
 
 void print_menu()
@@ -121,12 +158,14 @@ int main(void)
 
   char choice;
   read_choice(&choice);
+
   while (choice != 'm')
   {
     operate(numbers, choice);
     clear_buffer();
     read_choice(&choice);
   }
+
   destroy_list(numbers);
   return 0;
 }
