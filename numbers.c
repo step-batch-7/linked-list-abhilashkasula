@@ -118,7 +118,7 @@ void operate(List_ptr numbers, char choice)
   }
 
   Operate_on_list operation = operations[choice % 97];
-  operation(numbers);
+  (*operation)(numbers);
 }
 
 void print_menu()
